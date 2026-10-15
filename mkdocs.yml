@@ -1,0 +1,119 @@
+site_name: Habilita
+site_description: Documentação em dia. Acesso sob controle. — Ciclo B2B AI LAB / MAKERS 2026
+site_url: https://osamuelleite.github.io/habilita-docs/
+repo_url: https://github.com/osamuelleite/habilita-docs
+repo_name: osamuelleite/habilita-docs
+edit_uri: edit/main/docs/
+docs_dir: docs
+strict: true
+
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle: { icon: material/brightness-7, name: Modo escuro }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle: { icon: material/brightness-4, name: Modo claro }
+
+plugins:
+  - search:
+      lang: pt
+  - swagger-ui-tag
+
+# Apenas extensões padrão (compatíveis com Zensical — ver ADR 0004 §5)
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.tabbed:
+        alternate_style: true
+  - pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Início: index.md
+  - Produto e Negócio:
+      - produto/index.md
+      - Estratégia e Descoberta:
+          - Visão e Escopo do Produto: produto/estrategia/visao-escopo.md
+          - Canvas MVP: produto/estrategia/canvas-mvp.md
+          - É / Não É / Faz / Não Faz: produto/estrategia/e-nao-e.md
+          - Ishikawa: produto/estrategia/ishikawa.md
+          - Entrevistas e Evidências: produto/estrategia/entrevistas.md
+          - Roteiro de Entrevista: produto/estrategia/roteiro-entrevista.md
+          - Modelo de Registro de Entrevista: produto/estrategia/modelo-registro-entrevista.md
+          - Evidências Secundárias: produto/estrategia/evidencias-secundarias.md
+          - Brainstorming e Priorização: produto/estrategia/brainstorming.md
+          - Personas do Usuário: produto/estrategia/personas.md
+          - Mapeamento de Jornadas: produto/estrategia/jornadas.md
+          - Defensibilidade e Métrica da Demo: produto/estrategia/defensibilidade.md
+      - Design e UX:
+          - Identidade Visual: produto/design/identidade-visual.md
+          - Design System: produto/design/design-system.md
+          - Diretrizes da Marca: produto/design/diretrizes-marca.md
+      - Requisitos e Backlog:
+          - Requisitos Funcionais: produto/requisitos/funcionais.md
+          - Requisitos Não Funcionais: produto/requisitos/nao-funcionais.md
+          - Histórias de Usuário e Backlog: produto/requisitos/historias-backlog.md
+      - Manuais e Guias:
+          - Manual do Usuário e Fluxos: produto/manuais/manual-usuario.md
+  - Arquitetura:
+      - arquitetura/index.md
+      - API (OpenAPI): arquitetura/api.md
+      - Modelo de dados e tenants: arquitetura/dados.md
+      - ADRs:
+          - arquitetura/adr/index.md
+          - "0001 — Stack principal": arquitetura/adr/0001-stack.md
+          - "0002 — Multi-tenant e autorização": arquitetura/adr/0002-tenant-autorizacao.md
+          - "0003 — CI/CD e deploy": arquitetura/adr/0003-ci-cd.md
+          - "0004 — Documentação com MkDocs": arquitetura/adr/0004-documentacao-mkdocs.md
+          - "0005 — Monólito modular em camadas": arquitetura/adr/0005-estilo-arquitetural.md
+          - "0006 — Armazenamento de documentos": arquitetura/adr/0006-armazenamento-de-documentos.md
+          - "0007 — Recálculo idempotente": arquitetura/adr/0007-recalculo-idempotente.md
+          - "0008 — Consulta de liberação por CPF": arquitetura/adr/0008-consulta-liberacao-cpf.md
+          - "0009 — Auditoria append-only": arquitetura/adr/0009-auditoria-append-only.md
+  - Engenharia:
+      - engenharia/index.md
+      - Primeiros passos: engenharia/primeiros-passos.md
+      - Checklist do Checkpoint 1: engenharia/checkpoint-1.md
+      - Qualidade, tipagem e validação: engenharia/qualidade.md
+      - Definition of Done: engenharia/definition-of-done.md
+      - Ambiente local: engenharia/ambiente-local.md
+      - Como contribuir: engenharia/contribuir.md
+  - Segurança:
+      - seguranca/index.md
+  - Testes:
+      - testes/index.md
+      - Estratégia de testes: testes/estrategia.md
+      - Matriz de rastreabilidade: testes/matriz.md
+      - Relatórios: testes/relatorios/index.md
+  - Operação:
+      - operacao/index.md
+  - FinOps:
+      - finops/index.md
+  - Demo Day:
+      - demo/index.md

@@ -1,0 +1,1195 @@
+openapi: 3.1.0
+info:
+  title: Habilita API
+  version: 0.1.0
+  summary: Contrato da API do Habilita (Checkpoint 1)
+  description: |
+    Contrato v0.1 das jornadas do MVP do Habilita. Ainda não implementado; vai mudar.
+
+    **Convenções**
+    - Autenticação: `Authorization: Bearer <Firebase ID token>` em todas as rotas, exceto `/healthz` e `/readyz`.
+    - O tenant é sempre o da claim `tenantId` do token. Nenhuma rota aceita tenant na requisição.
+    - Papéis permitidos por rota na extensão `x-papeis` (base da suíte de autorização).
+    - Recurso de outro tenant (ou de outra terceirizada, para o papel `terceirizada`) responde **404**.
+    - Papel sem permissão responde **403**.
+    - Erros no formato Problem Details (RFC 9457), `application/problem+json`.
+    - Listas paginadas por cursor: `limite` (1 a 50, padrão 20) e `cursor` opaco.
+    - Datas de negócio em `YYYY-MM-DD`; carimbos de tempo em ISO 8601 UTC.
+    - Toda resposta traz o cabeçalho `X-Request-Id`.
+  contact:
+    name: Equipe Habilita (AI LAB / Makers)
+servers:
+  - url: http://localhost:8080/api
+    description: Local (Docker Compose)
+  - url: https://habilita.web.app/api
+    description: Produção (ilustrativo; definido no Checkpoint 3)
+security:
+  - bearerAuth: []
+tags:
+  - name: Sistema
+  - name: Sessão
+  - name: Cadastros
+    description: J1 · Terceirizadas, tipos de documento e contratos
+  - name: Trabalhadores
+    description: J2 · Trabalhadores e vínculos
+  - name: Documentos
+    description: J2 e J3 · Envio, revisão e download
+  - name: Conformidade
+    description: J4 · Semáforo e alertas
+  - name: Portaria
+    description: J5 · Consulta de liberação e registro de acesso
+  - name: Auditoria
+  - name: Interno
+    description: Rotas chamadas apenas por contas de serviço
+
+paths:
+  /healthz:
+    get:
+      tags: [Sistema]
+      operationId: healthz
+      summary: Verificação de vida
+      security: []
+      x-papeis: [publico]
+      responses:
+        '200':
+          description: Processo ativo
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: { type: string, const: ok }
+  /readyz:
+    get:
+      tags: [Sistema]
+      operationId: readyz
+      summary: Verificação de prontidão (dependências acessíveis)
+      security: []
+      x-papeis: [publico]
+      responses:
+        '200':
+          description: Pronto para receber tráfego
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: { type: string, const: ok }
+        '503':
+          $ref: '#/components/responses/Indisponivel'
+
+  /me:
+    get:
+      tags: [Sessão]
+      operationId: obterPerfil
+      summary: Perfil do usuário autenticado
+      description: H07
+      x-papeis: [gestor, terceirizada, porteiro]
+      responses:
+        '200':
+          description: Perfil
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Perfil' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+
+  /terceirizadas:
+    get:
+      tags: [Cadastros]
+      operationId: listarTerceirizadas
+      summary: Listar terceirizadas do tenant
+      x-papeis: [gestor]
+      parameters:
+        - $ref: '#/components/parameters/Limite'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Página de terceirizadas
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagina'
+                  - type: object
+                    properties:
+                      itens:
+                        type: array
+                        items: { $ref: '#/components/schemas/Terceirizada' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+    post:
+      tags: [Cadastros]
+      operationId: criarTerceirizada
+      summary: Cadastrar terceirizada
+      description: H08
+      x-papeis: [gestor]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NovaTerceirizada' }
+      responses:
+        '201':
+          description: Criada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Terceirizada' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '409': { $ref: '#/components/responses/Conflito' }
+
+  /tipos-documento:
+    get:
+      tags: [Cadastros]
+      operationId: listarTiposDocumento
+      summary: Listar tipos de documento do tenant
+      x-papeis: [gestor, terceirizada]
+      responses:
+        '200':
+          description: Tipos de documento
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [itens]
+                properties:
+                  itens:
+                    type: array
+                    items: { $ref: '#/components/schemas/TipoDocumento' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+    post:
+      tags: [Cadastros]
+      operationId: criarTipoDocumento
+      summary: Cadastrar tipo de documento com validade
+      description: H09
+      x-papeis: [gestor]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NovoTipoDocumento' }
+      responses:
+        '201':
+          description: Criado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TipoDocumento' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+
+  /contratos:
+    get:
+      tags: [Cadastros]
+      operationId: listarContratos
+      summary: Listar contratos
+      description: Para `terceirizada`, apenas os contratos da própria empresa.
+      x-papeis: [gestor, terceirizada]
+      parameters:
+        - $ref: '#/components/parameters/Limite'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Página de contratos
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagina'
+                  - type: object
+                    properties:
+                      itens:
+                        type: array
+                        items: { $ref: '#/components/schemas/Contrato' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+    post:
+      tags: [Cadastros]
+      operationId: criarContrato
+      summary: Criar contrato
+      description: H01
+      x-papeis: [gestor]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NovoContrato' }
+      responses:
+        '201':
+          description: Criado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Contrato' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+
+  /contratos/{contratoId}:
+    parameters:
+      - $ref: '#/components/parameters/ContratoId'
+    get:
+      tags: [Cadastros]
+      operationId: obterContrato
+      summary: Detalhar contrato
+      x-papeis: [gestor, terceirizada]
+      responses:
+        '200':
+          description: Contrato
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Contrato' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+
+  /contratos/{contratoId}/exigencias:
+    parameters:
+      - $ref: '#/components/parameters/ContratoId'
+    put:
+      tags: [Cadastros]
+      operationId: definirMatrizExigencias
+      summary: Substituir a matriz de exigências do contrato
+      description: H01. Dispara recálculo das alocações do contrato.
+      x-papeis: [gestor]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tipoDocumentoIds]
+              additionalProperties: false
+              properties:
+                tipoDocumentoIds:
+                  type: array
+                  minItems: 1
+                  maxItems: 20
+                  uniqueItems: true
+                  items: { $ref: '#/components/schemas/Id' }
+      responses:
+        '200':
+          description: Matriz atualizada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Contrato' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+
+  /contratos/{contratoId}/alocacoes:
+    parameters:
+      - $ref: '#/components/parameters/ContratoId'
+    post:
+      tags: [Trabalhadores]
+      operationId: alocarTrabalhador
+      summary: Vincular trabalhador ao contrato
+      description: H10 e H11 (reuso automático de documentos válidos).
+      x-papeis: [gestor, terceirizada]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [trabalhadorId]
+              additionalProperties: false
+              properties:
+                trabalhadorId: { $ref: '#/components/schemas/Id' }
+      responses:
+        '201':
+          description: Vínculo criado e semáforo calculado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Alocacao' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '409': { $ref: '#/components/responses/Conflito' }
+
+  /contratos/{contratoId}/conformidade:
+    parameters:
+      - $ref: '#/components/parameters/ContratoId'
+    get:
+      tags: [Conformidade]
+      operationId: obterConformidadeContrato
+      summary: Semáforo do contrato e de cada trabalhador
+      description: H16 e H23
+      x-papeis: [gestor, terceirizada]
+      parameters:
+        - $ref: '#/components/parameters/Limite'
+        - $ref: '#/components/parameters/Cursor'
+        - name: semaforo
+          in: query
+          required: false
+          schema: { $ref: '#/components/schemas/Semaforo' }
+      responses:
+        '200':
+          description: Conformidade do contrato
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ConformidadeContrato' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+
+  /trabalhadores:
+    get:
+      tags: [Trabalhadores]
+      operationId: listarTrabalhadores
+      summary: Listar trabalhadores
+      description: Para `terceirizada`, apenas os da própria empresa.
+      x-papeis: [gestor, terceirizada]
+      parameters:
+        - $ref: '#/components/parameters/Limite'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Página de trabalhadores
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagina'
+                  - type: object
+                    properties:
+                      itens:
+                        type: array
+                        items: { $ref: '#/components/schemas/Trabalhador' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+    post:
+      tags: [Trabalhadores]
+      operationId: criarTrabalhador
+      summary: Cadastrar trabalhador
+      description: |
+        H02. O CPF é recebido, validado e convertido em HMAC; nunca é persistido nem devolvido completo (ADR 0008).
+        Para `terceirizada`, `terceirizadaId` é ignorado e substituído pelo da claim.
+      x-papeis: [gestor, terceirizada]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NovoTrabalhador' }
+      responses:
+        '201':
+          description: Criado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Trabalhador' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '409': { $ref: '#/components/responses/Conflito' }
+
+  /trabalhadores/{trabalhadorId}:
+    parameters:
+      - $ref: '#/components/parameters/TrabalhadorId'
+    get:
+      tags: [Trabalhadores]
+      operationId: obterTrabalhador
+      summary: Detalhar trabalhador com documentos e semáforo por contrato
+      x-papeis: [gestor, terceirizada]
+      responses:
+        '200':
+          description: Trabalhador
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TrabalhadorDetalhe' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+
+  /trabalhadores/{trabalhadorId}/documentos:
+    parameters:
+      - $ref: '#/components/parameters/TrabalhadorId'
+    post:
+      tags: [Documentos]
+      operationId: enviarDocumento
+      summary: Enviar documento (upload)
+      description: |
+        H02. Multipart. Arquivo PDF, JPEG ou PNG com até 10 MiB (10.485.760 bytes),
+        validado pela assinatura de bytes (ADR 0006).
+      x-papeis: [terceirizada, gestor]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [arquivo, tipoDocumentoId, validoAte]
+              properties:
+                arquivo:
+                  type: string
+                  contentMediaType: application/octet-stream
+                  description: PDF, JPEG ou PNG, até 10 MiB
+                tipoDocumentoId: { $ref: '#/components/schemas/Id' }
+                validoAte:
+                  type: string
+                  format: date
+                  description: Data de validade informada pela terceirizada (RF03, RN-09)
+                dataEmissao:
+                  type: string
+                  format: date
+                  description: Opcional. Não pode estar no futuro; `validoAte` não pode ser anterior a ela
+            encoding:
+              arquivo:
+                contentType: application/pdf, image/jpeg, image/png
+      responses:
+        '201':
+          description: Documento criado como PENDENTE
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Documento' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '413': { $ref: '#/components/responses/ArquivoGrande' }
+        '415': { $ref: '#/components/responses/TipoNaoSuportado' }
+
+  /documentos:
+    get:
+      tags: [Documentos]
+      operationId: listarDocumentos
+      summary: Listar documentos (fila de revisão)
+      description: H12. Ordenação por `enviadoEm` crescente quando `status=PENDENTE`.
+      x-papeis: [gestor]
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema: { $ref: '#/components/schemas/StatusRevisao' }
+        - $ref: '#/components/parameters/Limite'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Página de documentos
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagina'
+                  - type: object
+                    properties:
+                      itens:
+                        type: array
+                        items: { $ref: '#/components/schemas/Documento' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+
+  /documentos/{documentoId}:
+    parameters:
+      - $ref: '#/components/parameters/DocumentoId'
+    get:
+      tags: [Documentos]
+      operationId: obterDocumento
+      summary: Detalhar documento
+      x-papeis: [gestor, terceirizada]
+      responses:
+        '200':
+          description: Documento
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Documento' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+
+  /documentos/{documentoId}/url-download:
+    parameters:
+      - $ref: '#/components/parameters/DocumentoId'
+    post:
+      tags: [Documentos]
+      operationId: gerarUrlDownload
+      summary: Gerar link temporário para visualizar o arquivo
+      description: |
+        H12.CA3. POST porque gera um artefato com validade e registro de auditoria.
+        URL assinada de leitura válida por 300 segundos (ADR 0006).
+      x-papeis: [gestor, terceirizada]
+      responses:
+        '200':
+          description: Link temporário
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [url, expiraEm]
+                properties:
+                  url: { type: string, format: uri }
+                  expiraEm: { type: string, format: date-time }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+
+  /documentos/{documentoId}/aprovacao:
+    parameters:
+      - $ref: '#/components/parameters/DocumentoId'
+    post:
+      tags: [Documentos]
+      operationId: aprovarDocumento
+      summary: Aprovar documento
+      description: |
+        H13. O gestor confere a validade informada no envio e pode corrigi-la enviando `validoAte` (RN-09).
+        Sem corpo, mantém a data informada pela terceirizada.
+      x-papeis: [gestor]
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                validoAte: { type: string, format: date }
+      responses:
+        '200':
+          description: Documento aprovado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Documento' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '409': { $ref: '#/components/responses/Conflito' }
+
+  /documentos/{documentoId}/rejeicao:
+    parameters:
+      - $ref: '#/components/parameters/DocumentoId'
+    post:
+      tags: [Documentos]
+      operationId: rejeitarDocumento
+      summary: Rejeitar documento com motivo obrigatório
+      description: H03. Motivo com 10 a 500 caracteres após remover espaços nas pontas (RN-03).
+      x-papeis: [gestor]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [motivo]
+              additionalProperties: false
+              properties:
+                motivo:
+                  type: string
+                  minLength: 10
+                  maxLength: 500
+      responses:
+        '200':
+          description: Documento rejeitado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Documento' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '409': { $ref: '#/components/responses/Conflito' }
+
+  /alertas:
+    get:
+      tags: [Conformidade]
+      operationId: listarAlertas
+      summary: Listar alertas de vencimento
+      description: H05
+      x-papeis: [gestor]
+      parameters:
+        - name: naoLidos
+          in: query
+          required: false
+          schema: { type: boolean, default: true }
+        - $ref: '#/components/parameters/Limite'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Página de alertas
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagina'
+                  - type: object
+                    properties:
+                      itens:
+                        type: array
+                        items: { $ref: '#/components/schemas/Alerta' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+
+  /alertas/{alertaId}/leitura:
+    parameters:
+      - name: alertaId
+        in: path
+        required: true
+        schema: { type: string, pattern: '^[A-Za-z0-9_-]{1,80}$' }
+    post:
+      tags: [Conformidade]
+      operationId: marcarAlertaLido
+      summary: Marcar alerta como lido
+      description: H05.CA4. Idempotente.
+      x-papeis: [gestor]
+      responses:
+        '204':
+          description: Marcado como lido
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+
+  /liberacoes/consultas:
+    post:
+      tags: [Portaria]
+      operationId: consultarLiberacao
+      summary: Consultar liberação por CPF
+      description: |
+        H04. CPF no corpo, nunca na URL (ADR 0008). Toda consulta é registrada.
+        Limite de 30 consultas por minuto por usuário.
+      x-papeis: [porteiro, gestor]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [cpf]
+              additionalProperties: false
+              properties:
+                cpf:
+                  type: string
+                  description: Com ou sem máscara; dígitos verificadores validados
+                  pattern: '^(\d{11}|\d{3}\.\d{3}\.\d{3}-\d{2})$'
+      responses:
+        '200':
+          description: Resultado da consulta
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ResultadoLiberacao' }
+              examples:
+                liberado:
+                  value:
+                    consultaId: cns_01JA0X9F
+                    resultado: LIBERADO
+                    trabalhador: { id: trb_01J9ZK2A, nome: Trabalhador Fictício, cpfMascarado: '***.456.789-**' }
+                    contratosAptos: [{ id: ctr_01J9Z, identificador: CT-2026-014, semaforo: AMARELO }]
+                    pendencias: []
+                    expiraEm: '2026-11-03T12:10:00Z'
+                naoCadastrado:
+                  value:
+                    consultaId: cns_01JA0XA2
+                    resultado: NAO_CADASTRADO
+                    contratosAptos: []
+                    pendencias: []
+                    expiraEm: '2026-11-03T12:10:00Z'
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '429': { $ref: '#/components/responses/MuitasRequisicoes' }
+
+  /acessos:
+    post:
+      tags: [Portaria]
+      operationId: registrarAcesso
+      summary: Registrar entrada ou barramento
+      description: H18 e RN-11
+      x-papeis: [porteiro]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [consultaId, decisao]
+              additionalProperties: false
+              properties:
+                consultaId: { $ref: '#/components/schemas/Id' }
+                decisao: { type: string, enum: [ENTRADA, BARRADO] }
+      responses:
+        '201':
+          description: Acesso registrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Acesso' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+        '404': { $ref: '#/components/responses/NaoEncontrado' }
+        '409': { $ref: '#/components/responses/Conflito' }
+        '422': { $ref: '#/components/responses/RegraViolada' }
+
+  /auditoria:
+    get:
+      tags: [Auditoria]
+      operationId: listarAuditoria
+      summary: Consultar trilha de auditoria
+      description: H21. Período máximo de 31 dias por consulta. Não existem rotas de alteração ou exclusão.
+      x-papeis: [gestor]
+      parameters:
+        - name: de
+          in: query
+          required: true
+          schema: { type: string, format: date }
+        - name: ate
+          in: query
+          required: true
+          schema: { type: string, format: date }
+        - name: acao
+          in: query
+          required: false
+          schema: { type: string }
+        - $ref: '#/components/parameters/Limite'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Página de registros
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagina'
+                  - type: object
+                    properties:
+                      itens:
+                        type: array
+                        items: { $ref: '#/components/schemas/RegistroAuditoria' }
+        '400': { $ref: '#/components/responses/RequisicaoInvalida' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+
+  /internal/jobs/recalculo-vencimentos:
+    post:
+      tags: [Interno]
+      operationId: executarRecalculoVencimentos
+      summary: Recalcular situações, semáforos e alertas (idempotente)
+      description: |
+        H15 e ADR 0007. Aceita apenas token OIDC da conta de serviço do Cloud Scheduler.
+        Reexecutar para a mesma `dataReferencia` produz o mesmo estado final.
+      security:
+        - oidcAgendador: []
+      x-papeis: [conta-servico-agendador]
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                dataReferencia:
+                  type: string
+                  format: date
+                  description: Padrão = hoje em America/Sao_Paulo
+      responses:
+        '200':
+          description: Execução concluída
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ExecucaoJob' }
+        '401': { $ref: '#/components/responses/NaoAutenticado' }
+        '403': { $ref: '#/components/responses/Proibido' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Firebase ID token com claims `tenantId`, `papel` e, para terceirizada, `terceirizadaId`.
+    oidcAgendador:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token OIDC emitido para a conta de serviço do Cloud Scheduler.
+
+  parameters:
+    Limite:
+      name: limite
+      in: query
+      required: false
+      schema: { type: integer, minimum: 1, maximum: 50, default: 20 }
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema: { type: string, maxLength: 500 }
+    ContratoId:
+      name: contratoId
+      in: path
+      required: true
+      schema: { $ref: '#/components/schemas/Id' }
+    TrabalhadorId:
+      name: trabalhadorId
+      in: path
+      required: true
+      schema: { $ref: '#/components/schemas/Id' }
+    DocumentoId:
+      name: documentoId
+      in: path
+      required: true
+      schema: { $ref: '#/components/schemas/Id' }
+
+  schemas:
+    Id:
+      type: string
+      pattern: '^[A-Za-z0-9_-]{1,40}$'
+    Papel:
+      type: string
+      enum: [gestor, terceirizada, porteiro]
+    Semaforo:
+      type: string
+      enum: [VERDE, AMARELO, VERMELHO]
+    StatusRevisao:
+      type: string
+      enum: [PENDENTE, APROVADO, REJEITADO]
+    SituacaoValidade:
+      type: string
+      enum: [VALIDO, A_VENCER, VENCIDO]
+      description: RN-04. Só faz sentido para documentos APROVADO.
+    Pagina:
+      type: object
+      required: [itens]
+      properties:
+        itens:
+          type: array
+          items: {}
+        proximoCursor:
+          type: [string, 'null']
+    Perfil:
+      type: object
+      required: [uid, tenantId, papel]
+      properties:
+        uid: { type: string }
+        tenantId: { $ref: '#/components/schemas/Id' }
+        papel: { $ref: '#/components/schemas/Papel' }
+        terceirizadaId:
+          oneOf:
+            - $ref: '#/components/schemas/Id'
+            - type: 'null'
+    NovaTerceirizada:
+      type: object
+      required: [cnpj, razaoSocial]
+      additionalProperties: false
+      properties:
+        cnpj:
+          type: string
+          pattern: '^(\d{14}|\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2})$'
+        razaoSocial: { type: string, minLength: 3, maxLength: 150 }
+    Terceirizada:
+      type: object
+      required: [id, cnpj, razaoSocial, ativa]
+      properties:
+        id: { $ref: '#/components/schemas/Id' }
+        cnpj: { type: string, pattern: '^\d{14}$' }
+        razaoSocial: { type: string }
+        ativa: { type: boolean }
+    NovoTipoDocumento:
+      type: object
+      required: [nome, validadeMeses]
+      additionalProperties: false
+      properties:
+        nome: { type: string, minLength: 2, maxLength: 80 }
+        validadeMeses: { type: integer, minimum: 1, maximum: 120 }
+    TipoDocumento:
+      type: object
+      required: [id, nome, validadeMeses]
+      properties:
+        id: { $ref: '#/components/schemas/Id' }
+        nome: { type: string }
+        validadeMeses: { type: integer }
+    NovoContrato:
+      type: object
+      required: [terceirizadaId, identificador, dataInicio, dataFim]
+      additionalProperties: false
+      properties:
+        terceirizadaId: { $ref: '#/components/schemas/Id' }
+        identificador: { type: string, minLength: 1, maxLength: 40 }
+        dataInicio: { type: string, format: date }
+        dataFim: { type: string, format: date }
+    Contrato:
+      type: object
+      required: [id, terceirizadaId, identificador, dataInicio, dataFim, vigente, exigencias, versaoMatriz]
+      properties:
+        id: { $ref: '#/components/schemas/Id' }
+        terceirizadaId: { $ref: '#/components/schemas/Id' }
+        identificador: { type: string }
+        dataInicio: { type: string, format: date }
+        dataFim: { type: string, format: date }
+        vigente: { type: boolean }
+        exigencias:
+          type: array
+          items: { $ref: '#/components/schemas/TipoDocumento' }
+        versaoMatriz: { type: integer, minimum: 0 }
+    NovoTrabalhador:
+      type: object
+      required: [nome, cpf]
+      additionalProperties: false
+      properties:
+        nome: { type: string, minLength: 3, maxLength: 120 }
+        cpf:
+          type: string
+          pattern: '^(\d{11}|\d{3}\.\d{3}\.\d{3}-\d{2})$'
+          writeOnly: true
+        terceirizadaId:
+          $ref: '#/components/schemas/Id'
+          description: Obrigatório para gestor; ignorado para terceirizada
+    Trabalhador:
+      type: object
+      required: [id, terceirizadaId, nome, cpfMascarado, ativo]
+      properties:
+        id: { $ref: '#/components/schemas/Id' }
+        terceirizadaId: { $ref: '#/components/schemas/Id' }
+        nome: { type: string }
+        cpfMascarado:
+          type: string
+          examples: ['***.456.789-**']
+        ativo: { type: boolean }
+    TrabalhadorDetalhe:
+      allOf:
+        - $ref: '#/components/schemas/Trabalhador'
+        - type: object
+          required: [documentos, alocacoes]
+          properties:
+            documentos:
+              type: array
+              items: { $ref: '#/components/schemas/Documento' }
+            alocacoes:
+              type: array
+              items: { $ref: '#/components/schemas/Alocacao' }
+    Pendencia:
+      type: object
+      required: [tipoDocumentoId, tipoDocumentoNome, motivo]
+      properties:
+        tipoDocumentoId: { $ref: '#/components/schemas/Id' }
+        tipoDocumentoNome: { type: string }
+        motivo: { type: string, enum: [AUSENTE, VENCIDO] }
+        contratoId: { $ref: '#/components/schemas/Id' }
+    Alocacao:
+      type: object
+      required: [contratoId, trabalhadorId, semaforo, pendencias, calculadoEm]
+      properties:
+        contratoId: { $ref: '#/components/schemas/Id' }
+        trabalhadorId: { $ref: '#/components/schemas/Id' }
+        semaforo: { $ref: '#/components/schemas/Semaforo' }
+        pendencias:
+          type: array
+          items: { $ref: '#/components/schemas/Pendencia' }
+        proximoVencimento:
+          type: [string, 'null']
+          format: date
+        calculadoEm: { type: string, format: date-time }
+    ConformidadeContrato:
+      type: object
+      required: [contratoId, semaforo, totais, trabalhadores]
+      properties:
+        contratoId: { $ref: '#/components/schemas/Id' }
+        semaforo:
+          oneOf:
+            - $ref: '#/components/schemas/Semaforo'
+            - type: 'null'
+          description: Pior cor entre os trabalhadores (RN-07); null se não há trabalhadores
+        totais:
+          type: object
+          required: [VERDE, AMARELO, VERMELHO]
+          properties:
+            VERDE: { type: integer, minimum: 0 }
+            AMARELO: { type: integer, minimum: 0 }
+            VERMELHO: { type: integer, minimum: 0 }
+        vencendoEm30Dias: { type: integer, minimum: 0 }
+        trabalhadores:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Alocacao'
+              - type: object
+                properties:
+                  nome: { type: string }
+                  cpfMascarado: { type: string }
+        proximoCursor:
+          type: [string, 'null']
+    Documento:
+      type: object
+      required: [id, trabalhadorId, tipoDocumentoId, validoAte, statusRevisao, enviadoEm]
+      properties:
+        id: { $ref: '#/components/schemas/Id' }
+        trabalhadorId: { $ref: '#/components/schemas/Id' }
+        tipoDocumentoId: { $ref: '#/components/schemas/Id' }
+        dataEmissao:
+          type: [string, 'null']
+          format: date
+        validoAte: { type: string, format: date }
+        statusRevisao: { $ref: '#/components/schemas/StatusRevisao' }
+        situacaoValidade:
+          oneOf:
+            - $ref: '#/components/schemas/SituacaoValidade'
+            - type: 'null'
+        motivoRejeicao:
+          type: [string, 'null']
+        arquivo:
+          type: object
+          description: Metadados apenas; o caminho interno não é exposto
+          properties:
+            contentType: { type: string, enum: [application/pdf, image/jpeg, image/png] }
+            tamanhoBytes: { type: integer, minimum: 1, maximum: 10485760 }
+            sha256: { type: string, pattern: '^[a-f0-9]{64}$' }
+        enviadoEm: { type: string, format: date-time }
+        revisadoEm:
+          type: [string, 'null']
+          format: date-time
+    Alerta:
+      type: object
+      required: [id, documentoId, trabalhadorId, tipo, criadoEm]
+      properties:
+        id:
+          type: string
+          description: Determinístico `{documentoId}_{tipo}` (RN-12)
+        documentoId: { $ref: '#/components/schemas/Id' }
+        trabalhadorId: { $ref: '#/components/schemas/Id' }
+        tipo: { type: string, enum: [VENCE_EM_30_DIAS, VENCIDO] }
+        validoAte: { type: string, format: date }
+        criadoEm: { type: string, format: date-time }
+        lidoEm:
+          type: [string, 'null']
+          format: date-time
+    ResultadoLiberacao:
+      type: object
+      required: [consultaId, resultado, contratosAptos, pendencias, expiraEm]
+      properties:
+        consultaId: { $ref: '#/components/schemas/Id' }
+        resultado: { type: string, enum: [LIBERADO, BLOQUEADO, NAO_CADASTRADO] }
+        trabalhador:
+          type: object
+          properties:
+            id: { $ref: '#/components/schemas/Id' }
+            nome: { type: string }
+            cpfMascarado: { type: string }
+        contratosAptos:
+          type: array
+          items:
+            type: object
+            required: [id, identificador, semaforo]
+            properties:
+              id: { $ref: '#/components/schemas/Id' }
+              identificador: { type: string }
+              semaforo: { $ref: '#/components/schemas/Semaforo' }
+        pendencias:
+          type: array
+          items: { $ref: '#/components/schemas/Pendencia' }
+        expiraEm:
+          type: string
+          format: date-time
+          description: Prazo para registrar o acesso com esta consulta (10 minutos, RN-11)
+    Acesso:
+      type: object
+      required: [id, consultaId, decisao, registradoEm]
+      properties:
+        id: { $ref: '#/components/schemas/Id' }
+        consultaId: { $ref: '#/components/schemas/Id' }
+        decisao: { type: string, enum: [ENTRADA, BARRADO] }
+        registradoEm: { type: string, format: date-time }
+    RegistroAuditoria:
+      type: object
+      required: [id, ator, papel, acao, recurso, dataHora, requestId]
+      properties:
+        id: { $ref: '#/components/schemas/Id' }
+        ator: { type: string }
+        papel: { type: string }
+        acao: { type: string, examples: [DOCUMENTO_APROVADO] }
+        recurso:
+          type: object
+          required: [tipo, id]
+          properties:
+            tipo: { type: string }
+            id: { type: string }
+        detalhes: { type: object }
+        dataHora: { type: string, format: date-time }
+        requestId: { type: string }
+    ExecucaoJob:
+      type: object
+      required: [dataReferencia, status, documentosProcessados, alertasCriados]
+      properties:
+        dataReferencia: { type: string, format: date }
+        status: { type: string, enum: [CONCLUIDO, FALHOU] }
+        documentosProcessados: { type: integer, minimum: 0 }
+        alertasCriados: { type: integer, minimum: 0 }
+        duracaoMs: { type: integer, minimum: 0 }
+    Problema:
+      type: object
+      description: RFC 9457 Problem Details
+      required: [type, title, status]
+      properties:
+        type: { type: string, format: uri-reference }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string }
+        requestId: { type: string }
+        erros:
+          type: array
+          description: Erros de validação por campo
+          items:
+            type: object
+            required: [campo, mensagem]
+            properties:
+              campo: { type: string }
+              mensagem: { type: string }
+
+  responses:
+    RequisicaoInvalida:
+      description: Dados inválidos
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    NaoAutenticado:
+      description: Token ausente, inválido ou expirado
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    Proibido:
+      description: Papel sem permissão para esta rota
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    NaoEncontrado:
+      description: Recurso inexistente ou fora do escopo do usuário (outro tenant ou outra terceirizada)
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    Conflito:
+      description: Estado atual impede a operação (duplicidade, documento já revisado, consulta expirada ou já usada)
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    ArquivoGrande:
+      description: Arquivo maior que 10 MiB
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    TipoNaoSuportado:
+      description: Conteúdo do arquivo não é PDF, JPEG ou PNG
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    RegraViolada:
+      description: 'Regra de negócio impede a operação (ex.: ENTRADA a partir de consulta BLOQUEADO)'
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    MuitasRequisicoes:
+      description: Limite de requisições excedido
+      headers:
+        Retry-After:
+          schema: { type: integer }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }
+    Indisponivel:
+      description: Dependência indisponível
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problema' }

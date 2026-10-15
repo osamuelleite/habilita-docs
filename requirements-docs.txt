@@ -1,0 +1,4 @@
+# Versões fixadas — ver ADR 0004 §5 (não atualizar para MkDocs 2.0 durante o ciclo)
+mkdocs==1.6.1
+mkdocs-material==9.7.*
+mkdocs-swagger-ui-tag==0.7.*
