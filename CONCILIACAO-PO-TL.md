@@ -76,7 +76,7 @@
 | IDs cruzados (H, CA, RF, RNF, RN, ADR, T-, AM-) existem | ✅ |
 | `openapi.yaml`: referências, parâmetros de caminho e esquemas | ✅ (validador próprio) |
 | `mkdocs.yml` é YAML válido | ✅ |
-| **`mkdocs build --strict` real** | ❌ **Não executado:** a rede bloqueou a instalação do MkDocs. Rodar `python -m mkdocs build --strict` antes do primeiro push |
+| **`mkdocs build --strict` real** | ✅ Executado em 14/10 antes do primeiro push (MkDocs 1.6.1 + Material 9.7, `requirements-docs.txt`): build sem erros nem avisos. O CI repete a verificação em todo PR |
 | **Swagger UI renderiza OpenAPI 3.1** | ⚠️ A confirmar no `mkdocs serve`. Se não renderizar, converter o contrato para 3.0.3 (trocar `type: [x, 'null']` por `nullable: true` e remover `const`/`examples`/`contentMediaType`) |
 | Diagramas Mermaid renderizam no tema | ⚠️ A confirmar no `mkdocs serve` |
 
