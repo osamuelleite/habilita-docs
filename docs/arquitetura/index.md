@@ -102,7 +102,7 @@ sequenceDiagram
     P->>W: digita CPF
     W->>A: POST /api/liberacoes/consultas {cpf} + ID token
     A->>A: valida token, papel = porteiro, tenantId da claim
-    A->>A: valida dígitos do CPF; calcula HMAC(cpf)
+    A->>A: valida dígitos do CPF, calcula HMAC(cpf)
     A->>F: get tenants/{t}/indiceCpf/{hash}
     alt CPF não encontrado
         A->>F: grava consulta (NAO_CADASTRADO) + auditoria
@@ -129,7 +129,7 @@ sequenceDiagram
     participant S as Cloud Storage
     participant F as Firestore
     T->>A: POST /api/trabalhadores/{id}/documentos (multipart, ≤ 10 MiB, validoAte)
-    A->>A: autoriza (RN-02); valida tamanho e assinatura de bytes
+    A->>A: autoriza (RN-02), valida tamanho e assinatura de bytes
     A->>S: grava arquivo em caminho privado + SHA-256
     A->>F: cria documento PENDENTE + auditoria
     A-->>T: 201
