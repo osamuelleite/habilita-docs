@@ -65,5 +65,12 @@ Todas são **hipóteses** até as entrevistas. A última coluna liga cada causa 
 ## Para o gate
 
 - [x] Cada um dos 6 grupos tem pelo menos uma causa.
-- [ ] Redesenhar no formato espinha de peixe (Miro, draw.io ou Excalidraw) e salvar a imagem em `docs/produto/estrategia/ishikawa.png`.
+- [x] Redesenhar no formato espinha de peixe (Miro, draw.io ou Excalidraw) e salvar a imagem em `docs/produto/estrategia/ishikawa.png`.
 - [ ] Revisar após as entrevistas: marcar causas confirmadas e descartadas.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 15/10/2026 | @osamuelleite | Versão inicial: efeito, causas nos 6M (diagrama em fluxograma) e tabela com origem, resposta do Habilita e pergunta do roteiro. |
+| 1.1 | 18/10/2026 | @Lelafeta | Diagrama trocado para o formato espinha de peixe (Mermaid `ishikawa-beta`) e imagem `ishikawa.png` adicionada. Item do gate marcado como concluído. |
