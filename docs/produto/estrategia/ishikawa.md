@@ -13,41 +13,30 @@
     O Guia do Checkpoint 1 pede os **6M**: Método, Máquina, Mão de obra, Material, Medida e Meio ambiente, com pelo menos uma causa em cada grupo (ou "não se aplica"). Os exemplos do rascunho original (Pessoas, Processo, Ferramentas, Dados, Comunicação) foram mantidos como causas dentro do grupo 6M correspondente, marcados com ★.
 
 ```mermaid
-flowchart LR
-  subgraph MET[Método]
-    M1[★ Conferência manual]
-    M2[★ Portaria sem informação atual]
-    M3[Sem matriz padrão de exigências por contrato]
-  end
-  subgraph MAQ[Máquina]
-    Q1[★ Planilhas e e-mail]
-    Q2[SST e portaria sem sistema comum]
-  end
-  subgraph MAO[Mão de obra]
-    O1[★ Ninguém responsável por conferir]
-    O2[Alta rotatividade de terceirizados]
-    O3[Gestor de SST sobrecarregado]
-  end
-  subgraph MAT[Material]
-    T1[Documentos em formatos variados e ilegíveis]
-    T2[Mesmo documento reenviado para cada contrato]
-  end
-  subgraph MED[Medida]
-    D1[★ Vencimentos não controlados]
-    D2[Sem indicador de conformidade]
-    D3[Sem registro de quem entrou]
-  end
-  subgraph MEI[Meio ambiente]
-    E1[Muitos contratos e terceirizadas simultâneos]
-    E2[Normas com periodicidades diferentes]
-    E3[Pressão de prazo para iniciar o serviço]
-  end
-  MET --> EF[Trabalhador inapto<br/>entra para trabalhar]
-  MAQ --> EF
-  MAO --> EF
-  MAT --> EF
-  MED --> EF
-  MEI --> EF
+ishikawa-beta
+    Trabalhador sem documentação válida entra para trabalhar
+    MÉTODO
+        Conferência manual
+        Portaria sem informação atual
+        Sem matriz padrão de exigências por contrato
+    MÃO DE OBRA
+        Ninguém responsável por conferir
+        Alta rotatividade de terceirizados
+        Gestor de SST sobrecarregado
+    MÁQUINA
+        Planilhas e e-mail
+        SST e portaria sem sistema comum
+    MATERIAL
+        Documentos em formatos variados e ilegíveis
+        Mesmo documento reenviado para cada contrato
+    MEDIDA
+        Vencimentos não controlados
+        Sem indicador de conformidade
+        Sem registro de quem entrou
+    MEIO AMBIENTE
+        Muitos contratos e terceirizadas simultâneos
+        Normas com periodicidades diferentes
+        Pressão de prazo para iniciar o serviço
 ```
 
 ## Causas por categoria
