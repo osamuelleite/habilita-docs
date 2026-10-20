@@ -46,3 +46,9 @@ Guia completo em [Primeiros passos](docs/engenharia/primeiros-passos.md) e [Como
 ## Publicação
 
 O workflow [`docs.yml`](.github/workflows/docs.yml) roda `mkdocs build --strict` em todo PR e publica no GitHub Pages a cada push na `main` (Settings → Pages → Source = "GitHub Actions"). Páginas com `!!! todo "CPx"` indicam o gate em que precisam estar preenchidas.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Apresentação do repositório e instruções para rodar a documentação. |

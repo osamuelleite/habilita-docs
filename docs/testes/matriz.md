@@ -10,3 +10,9 @@
 | RF09 / H04 | H04.CA3 | T-ISO-04 | Planejado | |
 
 Os casos de teste estão definidos na [Estratégia de testes](estrategia.md). "Resultado" passa a ✅ / ❌ com link do job do CI a partir do CP2.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Matriz de rastreabilidade inicial: requisito, critério de aceite e teste planejado. |

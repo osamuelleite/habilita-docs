@@ -43,3 +43,9 @@ O produto se apresenta como "trilha de auditoria de decisões e acessos". Em um 
 
 - [ ] Teste de cada caso de uso de escrita confirmando exatamente 1 registro de auditoria (H20.CA1).
 - [ ] Teste que confirma ausência de rotas `PUT`, `PATCH` e `DELETE` sob `/auditoria` no OpenAPI.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Trilha de auditoria append-only. Status: proposto. |

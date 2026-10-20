@@ -25,3 +25,9 @@
 
 !!! note "RNF10 a RNF13"
     Propostos pelo Tech Lead a partir dos Checkpoints, da LGPD e da jornada da portaria. RNF01 a RNF09 são da PO. Onde e como cada RNF é atendido: [Arquitetura](../../arquitetura/index.md).
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: RNF01 a RNF09, vindos do documento de Checkpoints. Do Tech Lead: RNF10 a RNF13 propostos (C5). |

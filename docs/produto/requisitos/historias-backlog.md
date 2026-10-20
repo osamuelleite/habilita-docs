@@ -281,3 +281,9 @@ OCR, eSocial, ICP-Brasil, app nativo, pagamentos. Lista completa e motivos em [W
 | Cadastro self-service de novos clientes e usuários | Clientes e usuários entram por seed; reduz superfície de ataque |
 | Um mesmo login de terceirizada atendendo vários clientes | No MVP, cada login pertence a um único tenant |
 | Foto do trabalhador na consulta de portaria | Dado biométrico, aumenta o risco LGPD sem ser essencial ao MVP |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: histórias H01 a H06, com texto e prioridade mantidos. Do Tech Lead: histórias H07 a H23 propostas, critérios de aceite Dado/Quando/Então e lista Won't detalhada (C4, C9). |

@@ -31,3 +31,9 @@ Proposto ──revisão em PR──▶ Aceito ──nova decisão──▶ Subst
 ## Modelo
 
 Contexto · Opções consideradas · Decisão · Consequências · Riscos e mitigação · Validação — exemplo completo na [ADR 0004](0004-documentacao-mkdocs.md).
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Índice dos ADRs 0001 a 0004 (temas da PO) e 0005 a 0009 (propostos pelo Tech Lead). |

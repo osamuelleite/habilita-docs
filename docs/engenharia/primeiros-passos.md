@@ -29,3 +29,9 @@ Abrir http://127.0.0.1:8000 · editar o `.md` · salvar · conferir no navegador
 3. Apague a caixa "Sobre esta página" quando a página estiver pronta.
 4. Nada de nome real, CPF ou empresa identificável.
 5. Antes de enviar ao GitHub, rode `python -m mkdocs build --strict` — tem que terminar sem erro.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Guia para a equipe instalar e rodar a documentação localmente com MkDocs. |

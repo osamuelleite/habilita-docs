@@ -116,3 +116,9 @@ Arquivo `.github/CODEOWNERS` com usuários reais do GitHub da equipe. Modelo (su
 
 - Cada gate recebe uma tag anotada na `main`: `cp1-fundacao`, `cp2-nucleo`, `cp3-nuvem`, `cp4-estabilizacao`, `v1.0.0-demo-day`.
 - Imagens de contêiner usam o SHA do commit como tag; nunca `latest` em produção.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Fluxo Git, branches, PR e proteção da main. |

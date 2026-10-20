@@ -50,3 +50,10 @@ Detalhes e fontes de ES1 a ES3 em [Evidências secundárias](evidencias-secundar
 
 !!! note "HP1 a HP5 são hipóteses de pesquisa"
     O prefixo `HP` evita confusão com as histórias de usuário `H01`, `H02`… do [Backlog](../requisitos/historias-backlog.md).
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e tabela de entrevistas. Do Tech Lead: evidências secundárias ES1 a ES3, perfis-alvo e hipóteses renomeadas para HP1 a HP5 (C10). |
+| 1.1 | 18/10/2026 | @Lelafeta | Inclusão dos registros de entrevista com personas sintéticas (E1 e E2) e adição de novas evidências secundárias (ES4 a ES6). |

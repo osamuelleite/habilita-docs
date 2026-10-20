@@ -39,3 +39,9 @@ Adotar **um monólito modular** com duas aplicações: `apps/web` (SPA) e `apps/
 
 - [ ] Revisão de PR com checklist "domínio sem dependência de infra".
 - [ ] Regra de dependências entre camadas verificada no CI com **import-linter** (o `dominio/` não importa `infra/` nem FastAPI).
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Monólito modular em camadas. Status: proposto, para aprovação até o CP2. |
