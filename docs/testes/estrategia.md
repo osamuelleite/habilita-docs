@@ -221,3 +221,9 @@ A partir do CP2, manter a [Matriz de rastreabilidade](matriz.md) (colunas: Requi
 | **Alta** | Jornada principal quebrada sem contorno | Aprovação não atualiza o semáforo | Corrigir na sprint corrente |
 | **Média** | Funciona com contorno | Filtro da fila não persiste | Priorizar no backlog |
 | **Baixa** | Cosmético | Texto desalinhado | Backlog |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Estratégia de testes com EP/BVA, testes de isolamento de tenant e matriz de autorização por papel. |

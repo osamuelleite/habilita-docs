@@ -92,3 +92,9 @@ O ecossistema MkDocs está em transição e isso precisa estar explícito:
 - [ ] Os 4 ADRs do CP1 publicados no site.
 - [ ] Item "documentação atualizada" presente no template de PR e na DoD.
 - [ ] Site publicado e link no README.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial da PO: documentação com MkDocs + Material, versões fixadas. Verificada pelo Tech Lead na conciliação. |

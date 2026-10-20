@@ -43,3 +43,9 @@ Cada artefato tem um ID estável, base da rastreabilidade **requisito → crité
 | **Liberação** | Resposta da portaria: o trabalhador pode ou não entrar. |
 | **SST** | Segurança e Saúde no Trabalho. |
 | **ASO** | Atestado de Saúde Ocupacional. |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Página inicial do site: proposta do Habilita, glossário e navegação. |

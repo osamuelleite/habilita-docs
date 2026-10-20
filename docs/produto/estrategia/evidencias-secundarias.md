@@ -37,3 +37,9 @@
 - Lei nº 6.019/1974 (com alterações da Lei nº 13.429/2017) — portal do Planalto.
 - Normas Regulamentadoras NR-7, NR-10, NR-33 e NR-35 — portal gov.br do Ministério do Trabalho e Emprego.
 - LGPD, Lei nº 13.709/2018, art. 5º (dado pessoal sensível) e art. 11 (bases legais para dado sensível).
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead na conciliação. Fontes públicas ES1 a ES3, rotuladas como hipótese não validada. |

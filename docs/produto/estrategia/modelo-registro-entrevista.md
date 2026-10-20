@@ -50,3 +50,9 @@
 | Mudança sugerida | História afetada | Prioridade sugerida |
 |---|---|---|
 | | | |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead na conciliação. Modelo de registro de entrevista anonimizado, com respostas, hipóteses e impacto no backlog. |

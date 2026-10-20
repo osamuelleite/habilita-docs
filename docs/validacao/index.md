@@ -8,3 +8,9 @@ As entrevistas e evidências que validam o problema estão em:
 - [Evidências Secundárias](../produto/estrategia/evidencias-secundarias.md)
 
 Os registros não contêm nome, CPF ou telefone dos entrevistados e foram feitos com consentimento. Evidências sem entrevista estão marcadas como **hipótese não validada**.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 18/10/2026 | @Lelafeta | Versão inicial: página de índice de validação com links para entrevistas, roteiro, modelo de registro e evidências secundárias. |

@@ -68,3 +68,9 @@ Passos propostos pelo Tech Lead a partir do backlog; a PO valida até o CP2.
 2. Recebe `LIBERADO`, `BLOQUEADO` (com pendências) ou `NAO_CADASTRADO`.
 3. Registra a entrada ou o barramento (H18).
 4. **Resultado:** acesso registrado e auditável.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e orientações. Conteúdo: as 5 jornadas do MVP, fluxo principal e passos de cada jornada ligados às histórias. |

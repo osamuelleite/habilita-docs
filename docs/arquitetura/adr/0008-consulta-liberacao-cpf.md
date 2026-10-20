@@ -55,3 +55,9 @@ O rascunho de escopo previa `GET /api/liberacao?cpf=...`. Parâmetros de URL cos
 - [ ] Teste que inspeciona os logs de uma consulta e falha se encontrar 11 dígitos seguidos.
 - [ ] Teste de isolamento T-ISO-04 (CPF existente só no tenant B consultado pelo porteiro do tenant A).
 - [ ] Teste de rate limit (31ª consulta no mesmo minuto recebe 429).
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Consulta de liberação por CPF com HMAC e POST (C15). Status: proposto. |

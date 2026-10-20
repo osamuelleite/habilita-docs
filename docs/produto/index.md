@@ -11,3 +11,9 @@ Tudo o que explica **o problema, para quem é o Habilita e o que ele faz**, ante
 
 !!! tip "Ordem sugerida"
     Visão e Escopo → É/Não É → Personas → Jornadas → Ishikawa → Requisitos → Backlog MoSCoW → Entrevistas → Defensibilidade.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Página de entrada da seção Produto e Negócio. |

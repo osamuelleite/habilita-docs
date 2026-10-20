@@ -72,5 +72,5 @@ Todas são **hipóteses** até as entrevistas. A última coluna liga cada causa 
 
 | Versão | Data | Autor | Alterações |
 |---|---|---|---|
-| 1.0 | 15/10/2026 | @osamuelleite | Versão inicial: efeito, causas nos 6M (diagrama em fluxograma) e tabela com origem, resposta do Habilita e pergunta do roteiro. |
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: efeito e 5 causas de exemplo (marcadas com ★). Do Tech Lead: organização nos 6M exigidos pelo guia (C1) e demais causas ligadas ao roteiro de entrevista. |
 | 1.1 | 18/10/2026 | @Lelafeta | Diagrama trocado para o formato espinha de peixe (Mermaid `ishikawa-beta`) e imagem `ishikawa.png` adicionada. Item do gate marcado como concluído. |

@@ -38,3 +38,10 @@
 - **Trilha de auditoria contínua** (quem aprovou, quem entrou), que tem valor justamente por ser ininterrupta.
 
 As funcionalidades isoladas (upload, semáforo, alerta) são copiáveis; a defesa está no que se acumula com o uso.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e métrica de exemplo (tempo de liberação na portaria, Opção A). Do Tech Lead: hipótese de reuso e métrica Opção B, para decisão da PO (C3). |
+| 1.1 | 18/10/2026 | @Lelafeta | Detalhamento da Opção A (tempo de liberação na portaria) com justificativa da PO, metas mensuráveis, cena da demo e limites. |

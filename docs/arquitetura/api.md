@@ -12,3 +12,9 @@ Fonte única: `openapi.yaml` na raiz do repositório. Esta página apenas render
 - CPF da portaria vai no corpo de `POST /liberacoes/consultas`, nunca na URL ([ADR 0008](adr/0008-consulta-liberacao-cpf.md)).
 
 <swagger-ui src="../openapi.yaml"/>
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e openapi.yaml na raiz como fonte única. Do Tech Lead: contrato OpenAPI 3.1 com 28 operações (C11). |

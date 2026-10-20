@@ -55,3 +55,10 @@
 3. **Como será construído** → Arquitetura e ADRs 0001 a 0004.
 4. **Como será validado** → Entrevistas e Estratégia de testes (EP/BVA, isolamento).
 5. **Quanto pretende gastar** → FinOps: US$ 0 até a S4, alertas configurados, teto US$ 50.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead na conciliação. Checklist do Checkpoint 1 com status e evidência de cada item. |
+| 1.1 | 18/10/2026 | @Lelafeta | Remoção da legenda e de emojis dos itens do checklist, com simplificação dos textos de status. |
