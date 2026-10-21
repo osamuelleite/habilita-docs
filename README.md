@@ -6,7 +6,7 @@ Repositório de **documentação** do Habilita: plataforma B2B de conformidade d
 
 📖 **Site publicado:** https://osamuelleite.github.io/habilita-docs/
 
-O código da aplicação fica em um repositório separado.
+O código da aplicação fica em um repositório separado. [Repositório do código](https://github.com/pedrolmelo/Habilita)
 
 ## Onde encontrar cada evidência
 
