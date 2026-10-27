@@ -110,7 +110,9 @@ nav:
       - testes/index.md
       - Estratégia de testes: testes/estrategia.md
       - Matriz de rastreabilidade: testes/matriz.md
-      - Relatórios: testes/relatorios/index.md
+      - Relatórios:
+          - Visão geral: testes/relatorios/index.md
+          - "Checkpoint 1 — QA e Isolamento": testes/relatorios/cp1-checklist-qa.md
   - Operação:
       - operacao/index.md
   - FinOps:

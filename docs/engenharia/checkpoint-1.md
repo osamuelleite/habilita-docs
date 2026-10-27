@@ -45,8 +45,8 @@
 
 | Item | Status |
 |---|---|
-| Alertas de orçamento 50/80/100% (print) | ([FinOps](../finops/index.md)) |
-| Teste de isolamento de tenant **escrito** (pode falhar) | especificado (T-ISO-01 a 07) · 🔧 escrever o código |
+| Alertas de orçamento 50/80/100% (print) | 🔧 ([FinOps](../finops/index.md)) |
+| Teste de isolamento de tenant **escrito** (pode falhar) | ✅ implementado (T-ISO-01 a 07) · [Relatório](../testes/relatorios/cp1-checklist-qa.md) |
 
 ## Ensaio da apresentação do gate
 
