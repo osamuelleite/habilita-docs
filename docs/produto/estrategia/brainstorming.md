@@ -10,3 +10,9 @@
 | Ideia | Valor (1–5) | Esforço (1–5) | Decisão |
 |---|---|---|---|
 | | | | |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página e modelo de priorização (valor × esforço) criados pela PO, mantidos na conciliação com o Tech Lead. Conteúdo a preencher. |

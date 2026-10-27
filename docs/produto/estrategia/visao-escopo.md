@@ -94,3 +94,9 @@ Detalhes e controles em [Segurança](../../seguranca/index.md).
 | Q4 | Prazo de retenção dos documentos após o fim do contrato | PO + orientação jurídica | 15/11 |
 | Q5 | Alertas de vencimento (H05) são **Should** ou **Must**? A jornada J4 da ficha inclui alertas no MVP | PO | 18/10 |
 | Q6 | Métrica principal da demo: tempo de liberação na portaria ou taxa de reuso? Ver [Defensibilidade](defensibilidade.md) | PO | 18/10 |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página, frase de visão, público, problema e proposta. Do Tech Lead: frase e tabela de LGPD (C14), riscos e questões Q1 a Q6 para decisão da PO. |

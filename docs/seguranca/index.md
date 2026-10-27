@@ -153,3 +153,9 @@ Base: checklist de 24 pontos para sistemas feitos com IA, adaptado para Firebase
 ### Processo
 - [ ] Antes de cada gate: rodar a suíte de isolamento e de autorização e anexar o resultado aos [Relatórios](../testes/relatorios/index.md).
 - [ ] Rodar o plugin de revisão de segurança antes do Checkpoint 4 e registrar achados no backlog.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Ameaças, controles por camada e evidências por gate, adaptados à estrutura da PO. |

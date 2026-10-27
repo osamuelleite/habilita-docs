@@ -150,3 +150,9 @@ Estados de revisão são **finais**: aprovado ou rejeitado não volta para pende
 - **Datas** de negócio (`dataEmissao`, `validoAte`) são datas sem hora (`YYYY-MM-DD`). Carimbos de tempo são UTC em ISO 8601.
 - **IDs** gerados pela aplicação (ex.: ULID) para não expor contagem e permitir ordenação.
 - **Exclusão:** no MVP não há exclusão física de documentos e trabalhadores, apenas inativação (`ativo = false`). A política de retenção (questão Q4) definirá a exclusão definitiva.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Modelo de dados por tenant e regras de negócio RN-01 a RN-12, ajustadas à validade informada no envio (C7). |

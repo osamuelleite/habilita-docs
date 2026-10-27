@@ -22,3 +22,9 @@
 
 !!! note "RF10"
     Proposto pelo Tech Lead: a página [É / Não É](../estrategia/e-nao-e.md) inclui "uma trilha de auditoria de decisões e acessos", mas não havia RF correspondente. A PO valida.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: RF01 a RF09. Do Tech Lead: RF10 (trilha de auditoria) proposto e critérios mensuráveis ligados às histórias (C5). |

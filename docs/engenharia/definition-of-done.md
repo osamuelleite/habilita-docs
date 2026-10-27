@@ -35,3 +35,9 @@ E também, conforme o Caderno B2B (seção 1.6):
 ## Definition of Done do gate
 
 Um gate só passa quando a evidência é **reproduzível por outra pessoa da equipe** e está **registrada no repositório**. Ver [Checklist do Checkpoint 1](checkpoint-1.md).
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: itens da DoD. Do Tech Lead: itens obrigatórios do Caderno (seção 1.6) e Definition of Ready (C12). |

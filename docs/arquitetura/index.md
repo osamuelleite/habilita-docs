@@ -208,3 +208,9 @@ Os requisitos são definidos em [Requisitos Não Funcionais](../produto/requisit
 | Decisão | ADR | Prazo |
 |---|---|---|
 | Política de retenção de documentos | A criar | 15/11 |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Visão da arquitetura em camadas e diagramas de sequência, adaptados à estrutura da PO. |
