@@ -132,3 +132,9 @@ flowchart LR
 ```
 
 Cada etapa bloqueia a seguinte (Caderno CP4). Unidade e lint rodam primeiro porque são os mais rápidos e pegam a maior parte dos erros.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead após a decisão por Python + FastAPI (14/10). Ferramentas de qualidade, tipagem e validação. |

@@ -50,3 +50,9 @@ Documentos mudam de situação (válido → a vencer → vencido) apenas com a p
 - [ ] H15.CA1: executar duas vezes para a mesma data e comparar o estado final (teste de integração no emulador).
 - [ ] H15.CA4: simular falha no meio do lote e reexecutar.
 - [ ] Testes de valor-limite D−1, D, D+29, D+30, D+31 no domínio.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Recálculo diário idempotente de vencimentos. Status: proposto. |

@@ -27,3 +27,9 @@ Consulta se o trabalhador está liberado e registra a entrada. Papel no sistema:
 | Gestor(a) SST | Saber quem está apto, por contrato, sem montar planilha | Vencimentos passam despercebidos; aprovar documento por e-mail não deixa histórico | Diária |
 | Terceirizada | Enviar os documentos uma vez e saber o que falta | Reenvia o mesmo documento para cada contrato; não sabe por que foi recusado | A cada admissão, vencimento ou rejeição |
 | Portaria | Liberar ou barrar com segurança, rápido | Lista impressa desatualizada; responsabilidade sem ferramenta | Várias vezes por dia, a cada entrada |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e orientações. Conteúdo: três personas (gestor de SST, terceirizada, portaria) como hipóteses derivadas das jornadas. |

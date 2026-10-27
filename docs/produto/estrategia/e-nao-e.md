@@ -39,3 +39,9 @@ Define o limite do MVP do Habilita, para evitar que o escopo cresça durante o c
     - Pagamentos ou cobrança
     - Controle físico de catraca ou biometria
     - Confirmação da autenticidade do documento junto à clínica ou ao órgão emissor
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Conteúdo: matriz É / Não É / Faz / Não Faz do Escopo do Habilita, que limita o MVP. |

@@ -53,3 +53,9 @@ Trabalhadores enviam PDFs e imagens de documentos de SST, alguns com dado de sa�
 - [ ] Testes de valor-limite de tamanho (10.485.760 e 10.485.761 bytes) e de arquivo com extensão falsa ([Estratégia de Testes](../../testes/estrategia.md)).
 - [ ] Teste que confirma URL expirada após o prazo.
 - [ ] Teste das Rules do Storage no emulador.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: ADR criado pelo Tech Lead na conciliação. Arquivos no Cloud Storage privado, com download por URL assinada. Status: proposto. |

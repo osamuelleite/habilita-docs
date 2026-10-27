@@ -7,3 +7,8 @@
 
     **Prazo:** CP4 · 29/11
 
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página e orientações criadas pela PO, mantidas na conciliação com o Tech Lead. Conteúdo previsto para o CP4. |

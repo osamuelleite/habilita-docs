@@ -50,3 +50,9 @@ Registrar: consentimento verbal obtido (sim/não), gravação autorizada (sim/n�
 1. Preencher o [modelo de registro](modelo-registro-entrevista.md) enquanto a memória está fresca.
 2. Apagar a gravação após transcrever os trechos relevantes.
 3. Atualizar a síntese em [Entrevistas e Evidências](entrevistas.md).
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead na conciliação (ver CONCILIACAO-PO-TL.md). Roteiro de entrevista com consentimento e perguntas P1 a P10 ligadas às hipóteses e ao Ishikawa. |

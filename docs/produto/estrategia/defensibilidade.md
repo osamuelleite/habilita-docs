@@ -14,6 +14,18 @@
 | Valor atual (sem o Habilita) | A medir nas entrevistas (pergunta P5 e P7 do roteiro) |
 | Meta com o Habilita | Opção A: p95 ≤ 800 ms na consulta. Opção B: ≥ 70% das exigências atendidas por reuso e semáforo verde em até 2 minutos |
 
+## Opção A detalhada — tempo para liberar um trabalhador na portaria
+
+> Dado um trabalhador cadastrado, medir (1) o tempo de resposta da consulta por CPF e (2) se a decisão (`LIBERADO` ou `BLOQUEADO`) está correta.
+
+**Por que a PO propôs a Opção A:** a portaria é a ponta mais visível do problema: hoje ela confere listas em papel e libera sem verificar ou barra quem estava em dia (HP3). A Opção A mostra o efeito prático do Habilita: o porteiro digita o CPF, recebe uma resposta direta e o acesso fica registrado.
+
+**Metas:** p95 ≤ 800 ms com 1.000 trabalhadores (H04.CA5), comprovado por teste de carga; 100% dos trabalhadores com documento vencido ou reprovado retornam `BLOQUEADO`; 1 registro de auditoria por consulta (H20).
+
+**Cena da demo:** consultar um CPF verde, um amarelo e um vermelho; os dois primeiros retornam `LIBERADO` e o terceiro `BLOQUEADO`, com o acesso registrado na trilha.
+
+**Limite:** mede velocidade e acerto, que uma planilha bem organizada também poderia oferecer; por isso não prova sozinha a defensibilidade e funciona como métrica complementar à Opção B.
+
 ## Opção B detalhada — taxa de reuso na habilitação
 
 > Dado um trabalhador já habilitado no Contrato A, ao vinculá-lo ao Contrato B, medir (1) a porcentagem das exigências de B atendidas sem novo upload e (2) o tempo até o semáforo ficar verde.
@@ -26,3 +38,10 @@
 - **Trilha de auditoria contínua** (quem aprovou, quem entrou), que tem valor justamente por ser ininterrupta.
 
 As funcionalidades isoladas (upload, semáforo, alerta) são copiáveis; a defesa está no que se acumula com o uso.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: página e métrica de exemplo (tempo de liberação na portaria, Opção A). Do Tech Lead: hipótese de reuso e métrica Opção B, para decisão da PO (C3). |
+| 1.1 | 18/10/2026 | @Lelafeta | Detalhamento da Opção A (tempo de liberação na portaria) com justificativa da PO, metas mensuráveis, cena da demo e limites. |

@@ -95,3 +95,9 @@ As outras camadas seguem a base obrigatória do ciclo (GCP + Firebase) e não ti
 - [ ] Esqueleto sobe com `docker compose up` (API FastAPI, web, emuladores Auth/Firestore/Storage) até 18/10.
 - [ ] CI com Ruff, mypy e build verdes até 18/10.
 - [ ] Teste de conformidade da API com o `openapi.yaml` ativo no CI até o CP2.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: tema e formato do ADR. Do Tech Lead: stack justificada, com a decisão de linguagem incorporada (C8). |

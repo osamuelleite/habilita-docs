@@ -13,3 +13,13 @@ Relatórios de validação, qualidade e conformidade do Habilita organizados por
 ## Relatórios Disponíveis
 
 - **[Checkpoint 1 — Checklist de QA e Testes de Isolamento Multi-tenant](cp1-checklist-qa.md)**: Evidência do cumprimento das exigências do Guia do PO para a Semana 2, detalhando os testes T-ISO-01 a T-ISO-07 da história H19 e conformidade arquitetural.
+| Gate | JUnit | Cobertura | Lighthouse |
+|---|---|---|---|
+| CP2 | | | |
+| CP4 | | | |
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Página para os relatórios gerados pelo CI em cada gate. |

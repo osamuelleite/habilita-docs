@@ -82,3 +82,9 @@ Há três papéis com permissões muito diferentes — gestor(a) de SST, terceir
 - [ ] Testes de isolamento T-ISO-01 a T-ISO-07 **escritos** até 18/10 (podem falhar) e **passando** até 01/11.
 - [ ] Matriz de autorização cobrindo 100% das rotas (CP2 e CP4).
 - [ ] Teste das Security Rules no emulador negando leitura e escrita diretas.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial, conciliação PO + Tech Lead. Da PO: tema e formato do ADR. Do Tech Lead: ADRs de multi-tenancy e RBAC fundidos, com 404 entre clientes (C8, C16). |

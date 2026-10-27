@@ -5,43 +5,41 @@
 | Responsável pela conferência | PO (cobra) e Tech Lead (itens técnicos) |
 | Última atualização | 14/10/2026 |
 
-Legenda: ✅ escrito no repositório · ⏳ pendente de decisão ou de execução · 🔧 depende de configuração ou código
-
 ## Produto e negócio (PO)
 
 | Item | Status | Evidência |
 |---|---|---|
-| Visão do produto com frase de LGPD | ✅ rascunho · ⏳ revisão da PO | [Visão e Escopo](../produto/estrategia/visao-escopo.md) |
-| Ishikawa (6M, um grupo por causa no mínimo) | ✅ diagrama e tabela · ⏳ imagem espinha de peixe | [Ishikawa](../produto/estrategia/ishikawa.md) |
-| Backlog MoSCoW com pelo menos um Won't | ✅ · ⏳ PO valida H07 a H23 e a prioridade de H05 | [Backlog](../produto/requisitos/historias-backlog.md) |
-| Critérios de aceite mensuráveis | ✅ | [Requisitos Funcionais](../produto/requisitos/funcionais.md) e [Backlog](../produto/requisitos/historias-backlog.md) |
-| 2 entrevistas ou evidências rotuladas | ⏳ entrevistas · ✅ evidências secundárias | [Entrevistas e Evidências](../produto/estrategia/entrevistas.md) |
-| Hipótese de defensibilidade + métrica da demo | ✅ hipótese · ⏳ PO escolhe a métrica (Q6) | [Defensibilidade](../produto/estrategia/defensibilidade.md) |
+| Visão do produto com frase de LGPD | [Visão e Escopo](../produto/estrategia/visao-escopo.md) |
+| Ishikawa (6M, um grupo por causa no mínimo) | diagrama e tabela · imagem espinha de peixe | [Ishikawa](../produto/estrategia/ishikawa.md) |
+| Backlog MoSCoW com pelo menos um Won't | PO valida H07 a H23 e a prioridade de H05 | [Backlog](../produto/requisitos/historias-backlog.md) |
+| Critérios de aceite mensuráveis | [Requisitos Funcionais](../produto/requisitos/funcionais.md) e [Backlog](../produto/requisitos/historias-backlog.md) |
+| 2 entrevistas ou evidências rotuladas | entrevistas · evidências secundárias | [Entrevistas e Evidências](../produto/estrategia/entrevistas.md) |
+| Hipótese de defensibilidade + métrica da demo | hipótese · PO escolhe a métrica (Q6) | [Defensibilidade](../produto/estrategia/defensibilidade.md) |
 
 ## Arquitetura (Tech Lead)
 
 | Item | Status | Evidência |
 |---|---|---|
-| 4 ADRs (0001 a 0004), incluindo multi-tenancy e RBAC | ✅ propostas · ⏳ aprovação em PR | [ADRs](../arquitetura/adr/index.md) |
-| Linguagem da API (ADR 0001) | ✅ Python + FastAPI (decidido em 14/10) | [ADR 0001](../arquitetura/adr/0001-stack.md) |
-| OpenAPI v0.1 | ✅ 25 rotas de usuário + job + health | [API](../arquitetura/api.md) |
-| Repositório organizado | ✅ documentado · 🔧 criar `apps/`, `seed/` | `README.md` na raiz |
-| Definition of Done | ✅ | [DoD](definition-of-done.md) |
-| Estratégia de testes | ✅ | [Estratégia de testes](../testes/estrategia.md) |
-| Stack justificada | ✅ | [ADR 0001](../arquitetura/adr/0001-stack.md) |
-| Ferramentas de qualidade, tipagem e validação | ✅ | [Qualidade](qualidade.md) |
+| 4 ADRs (0001 a 0004), incluindo multi-tenancy e RBAC | propostas · aprovação em PR | [ADRs](../arquitetura/adr/index.md) |
+| Linguagem da API (ADR 0001) | Python + FastAPI (decidido em 14/10) | [ADR 0001](../arquitetura/adr/0001-stack.md) |
+| OpenAPI v0.1 | 25 rotas de usuário + job + health | [API](../arquitetura/api.md) |
+| Repositório organizado | documentado · 🔧 criar `apps/`, `seed/` | `README.md` na raiz |
+| Definition of Done | [DoD](definition-of-done.md) |
+| Estratégia de testes | [Estratégia de testes](../testes/estrategia.md) |
+| Stack justificada | [ADR 0001](../arquitetura/adr/0001-stack.md) |
+| Ferramentas de qualidade, tipagem e validação | [Qualidade](qualidade.md) |
 
 ## Ambiente (DevOps)
 
 | Item | Status |
 |---|---|
-| Proteção da `main`, CODEOWNERS e template de PR | ✅ template · 🔧 proteção e CODEOWNERS ([Como contribuir](contribuir.md)) |
-| `.env.example` sem segredos | 🔧 |
-| `docker compose up` com API, web e emuladores Auth/Firestore/Storage | 🔧 |
-| Teste em máquina limpa por outro integrante | 🔧 |
-| CI com Ruff, mypy, ESLint, `tsc` e build verdes | 🔧 |
-| `mkdocs build --strict` verde e site no GitHub Pages | 🔧 ([ADR 0004](../arquitetura/adr/0004-documentacao-mkdocs.md)) |
-| Seed reproduzível | 🔧 |
+| Proteção da `main`, CODEOWNERS e template de PR | template · proteção e CODEOWNERS ([Como contribuir](contribuir.md)) |
+| `.env.example` sem segredos |
+| `docker compose up` com API, web e emuladores Auth/Firestore/Storage |
+| Teste em máquina limpa por outro integrante |
+| CI com Ruff, mypy, ESLint, `tsc` e build verdes |
+| `mkdocs build --strict` verde e site no GitHub Pages | ([ADR 0004](../arquitetura/adr/0004-documentacao-mkdocs.md)) |
+| Seed reproduzível |
 
 ## Segurança e custos
 
@@ -57,3 +55,10 @@ Legenda: ✅ escrito no repositório · ⏳ pendente de decisão ou de execuçã
 3. **Como será construído** → Arquitetura e ADRs 0001 a 0004.
 4. **Como será validado** → Entrevistas e Estratégia de testes (EP/BVA, isolamento).
 5. **Quanto pretende gastar** → FinOps: US$ 0 até a S4, alertas configurados, teto US$ 50.
+
+## Histórico de versões
+
+| Versão | Data | Autor | Alterações |
+|---|---|---|---|
+| 1.0 | 14/10/2026 | @osamuelleite | Versão inicial: página criada pelo Tech Lead na conciliação. Checklist do Checkpoint 1 com status e evidência de cada item. |
+| 1.1 | 18/10/2026 | @Lelafeta | Remoção da legenda e de emojis dos itens do checklist, com simplificação dos textos de status. |
