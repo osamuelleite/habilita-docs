@@ -1,2 +1,5 @@
 site/
 docs/openapi.yaml
+venv/
+.venv/
+env/
